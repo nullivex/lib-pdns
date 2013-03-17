@@ -34,7 +34,7 @@ class PDNS {
 	}
 
 	public function connect(){
-		return self::_get()->setConfig(Config::get('pdns_db'))->connect();
+		return self::_get()->setConfig(Config::getMerged('pdns','db'))->connect();
 	}
 
 	public static function getDomain($name){
