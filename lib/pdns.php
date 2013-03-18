@@ -19,7 +19,7 @@
  *   along with OpenLSS.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-lib('db'); //uses Db (which was probably already loaded)
+ld('db'); //uses Db (which was probably already loaded)
 
 class PDNS {
 
