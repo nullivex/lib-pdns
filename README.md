@@ -6,7 +6,6 @@ PHP library for modifying an PowerDNS MySQL database
 Usage
 ----
 ```php
-ld('pdns');
 
 //setup the database config
 $db = array(

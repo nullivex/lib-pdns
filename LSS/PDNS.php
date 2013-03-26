@@ -19,7 +19,6 @@
  *	If not, see <http://www.gnu.org/licenses/>.
  */
 namespace LSS;
-ld('config','db','func/log','func/mda');
 
 class PDNS {
 
