@@ -18,9 +18,9 @@ $db = array(
 Config::set('pdns.db',$db); unset($db);
 
 //getters
-$domain = PDNS::getDomain('test.com');
-$domain = PDNS::getDomainByHost('www.test.com');
-$record = PDNS::getRecord(array('id'=>1));
+$domain = PDNS::fetchDomain('test.com');
+$domain = PDNS::fetchDomainByHost('www.test.com');
+$record = PDNS::fetchRecord(array('id'=>1));
 
 //update - updates or creates record and finds it by ident
 //this is the main function unless advanced actions are needed
@@ -52,14 +52,14 @@ $rv = PDNS::deleteRecord(array('id'=>1));
 Reference
 ---
 
-### (array) PDNS::getDomain($name)
+### (array) PDNS::fetchDomain($name)
 Get a domain by its name and return the database row
 
-### (array) PDNS::getDomainByHost($name)
+### (array) PDNS::fetchDomainByHost($name)
 Take a FQDN and return its given domain database row
 
 ### (mixed) PDNS::update($identifier,$data,$type='A')
-  * $identifier		Ident that gets passed to PDNS::getDomainByHost()
+  * $identifier		Ident that gets passed to PDNS::fetchDomainByHost()
   * $data			The record data eg: 1.2.3.4
   * $type			The record type defaults to A
 Returns the record ID on creation, TRUE on update, FALSE on failure
@@ -86,7 +86,7 @@ The current record schema looks like this
   * prio		The record priority mainly used for MX records eg: 10
   * change_date	This gets set automatically
 
-### (mixed) PDNS::getRecord($args)
+### (mixed) PDNS::fetchRecord($args)
 Similar to create by takes an array of arguments related to the 
 schema and returns the database row.
 Returns FALSE on failure
@@ -97,6 +97,6 @@ Returns FALSE on failure
 Returns TRUE on success, FALSE on failure
 
 ### (bool) PDNS::deleteRcord($args=array())
-  * $args	Similar to PDNS::getRecord()
+  * $args	Similar to PDNS::fetchRecord()
 Returns TRUE on success, FALSE on failure
 

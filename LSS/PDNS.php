@@ -36,18 +36,18 @@ class PDNS {
 		return self::_get()->setConfig(Config::getMerged('pdns','db'))->connect();
 	}
 
-	public static function getDomain($name){
+	public static function fetchDomain($name){
 		return self::_get()->fetch(
 			 'SELECT * FROM `domains` WHERE name=?'
 			,array($name)
 		);
 	}
 
-	public static function getDomainByHost($fqdn){
+	public static function fetchDomainByHost($fqdn){
 		$fqdncrumbs = explode('.',$fqdn);
 		while(true){
 			$zone = implode($fqdncrumbs,'.');
-			$domain = self::getDomain($zone);
+			$domain = self::fetchDomain($zone);
 			if(is_array($domain)) break;
 			array_shift($fqdncrumbs);
 			if(count($fqdncrumbs) == 0) break;
@@ -55,8 +55,8 @@ class PDNS {
 		return (is_array($domain)) ? $domain : false;
 	}
 
-	public static function getRecord($args){
-		$where = Db::prepwhere($args);
+	public static function fetchRecord($args){
+		$where = Db::prepWhere($args);
 		return self::_get()->fetch('SELECT * FROM `records`'.array_shift($where),$where);
 	}
 
@@ -81,21 +81,21 @@ class PDNS {
 
 	public static function deleteRecord($args=array()){
 		if(!is_numeric(mda_get($args,'id'))) return false;
-		$where = Db::prepwhere($args);
+		$where = Db::prepWhere($args);
 		return self::_get()->run('DELETE FROM `records`'.array_shift($where),$where);
 	}
 
 	public static function update($identifier,$data,$type='A'){
 		$type = strtoupper($type);
 		//get domain
-		$domain = self::getDomainByHost($identifier);
+		$domain = self::fetchDomainByHost($identifier);
 		if(!is_array($domain)){
 			dolog('DNS Zone for '.$identifier.' not found',LOG_ERROR);
 			return false;
 		}
 		dolog('Using DNS Zone: '.mda_get($domain,'name'));
 		//check for existing
-		$record = self::getRecord(array(
+		$record = self::fetchRecord(array(
 			 'domain_id'	=> mda_get($domain,'id')
 			,'type'			=> $type
 			,'name'			=> $identifier
@@ -120,7 +120,7 @@ class PDNS {
 	}
 
 	public static function delete($identifier,$data,$type='A'){
-		$record = self::getRecord(array(
+		$record = self::fetchRecord(array(
 			 'type'			=> $type
 			,'name'			=> $identifier
 			,'content'		=> $data
