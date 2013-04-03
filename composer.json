@@ -24,18 +24,11 @@
 	]
 	,"require": {
 		 "php":						">=5.3.2"
-		,"openlss/core-boot":		">=0.0.1"
-		,"openlss/func-log":		">=0.0.1"
-		,"openlss/func-mda":		">=0.0.1"
-		,"openlss/lib-config":		">=0.0.1"
-		,"openlss/lib-db":			">=0.0.1"
-	}
-	,"require-dev": {
-		 "openlss/core-boot":		"dev-master"
-		,"openlss/func-log":		"dev-master"
-		,"openlss/func-mda":		"dev-master"
-		,"openlss/lib-config":		"dev-master"
-		,"openlss/lib-db":			"dev-master"
+		,"openlss/core-boot":		"~0.0.1"
+		,"openlss/func-log":		"~0.0.1"
+		,"openlss/func-mda":		"~0.0.1"
+		,"openlss/lib-config":		"~0.0.1"
+		,"openlss/lib-db":			"~0.0.1"
 	}
 	,"autoload": {
 		"psr-0": {
