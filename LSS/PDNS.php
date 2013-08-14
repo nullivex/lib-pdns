@@ -86,6 +86,8 @@ class PDNS {
 	}
 
 	public static function update($identifier,$data,$type='A'){
+		$identifier = self::_cleanHostname($identifier);
+		$data = self::_cleanHostname($data);
 		$type = strtoupper($type);
 		//get domain
 		$domain = self::fetchDomainByHost($identifier);
@@ -120,6 +122,9 @@ class PDNS {
 	}
 
 	public static function delete($identifier,$data,$type='A'){
+		$identifier = self::_cleanHostname($identifier);
+		$data = self::_cleanHostname($data);
+		$type = strtoupper($type);
 		$record = self::fetchRecord(array(
 			 'type'			=> $type
 			,'name'			=> $identifier
@@ -133,6 +138,17 @@ class PDNS {
 		}
 		dolog('Record '.$info.' NOT found');
 		return false;
+	}
+
+	private static function _cleanHostname($hostname=''){
+		$orig_hn = $hostname;
+		$c = 1;
+		while($c>0)
+			str_replace('..','.',$hostname,$c);
+		$hostname = trim($hostname,'. ');
+		if($hostname != $orig_hn)
+			dolog('Hostname '.$orig_hn.' auto-repaired to '.$hostname);
+		return $hostname;
 	}
 
 }
